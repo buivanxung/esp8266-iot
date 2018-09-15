@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <!-- Required meta tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title> Technology</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="js/modernizr-3.5.0.min.js"></script>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      var socket;
+       $(document).ready(function() {
+        socket = io.connect('http://localhost:5050',{
+          reconnection: true,
+          reconnectionDelay: 1000,
+          reconnectionDelayMax : 5000,
+          reconnectionAttempts: 99999
+        });
+  			socket.on('sending_json_data', function (data) {
+          var dStatus = data.toString().split(";");
+          var d1status = dStatus[0];
+          var d2status = dStatus[1];
+          if (d1status[3] =='t') {
+            $("input[id='myonoffswitch1']").is(':checked');
+          }else if (d1status[3] ='f') {
+            $("input[id='myonoffswitch1']").attr('checked',false);
+          }
+          if (d2status[3] =='t') {
+            $("input[id='myonoffswitch2']").is(':checked');
+          }else if (d2status[3] ='f'){
+            $("input[id='myonoffswitch2']").attr('checked',false);
+          }
+  			});
+      $('input').on('click', function() {
+        if ($("input[id='myonoffswitch1']").is(':checked')) {
+          if (socket) {
+              socket.emit('respond_command', "D1ON");
+              console.log("D1PON");
+            }
+        }else {
+          if (socket) {
+              socket.emit('respond_command', "D1OFF");
+            }
+            console.log("D1POFF");
+        }
+        if ($("input[id='myonoffswitch2']").is(':checked')) {
+          if (socket) {
+              socket.emit('respond_command', "D2ON");
+            }
+        }
+        else {
+          if (socket) {
+              socket.emit('respond_command', "D2OFF");
+            }
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="body">
+    <div class="text-center">
+      <p>Control</p>
+    </div>
+    <div class="text-center">
+      <table style="width:100%">
+        <th style="width:50%">
+          <div class="text-center">
+            <label for="">Device 1</label>
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch1" class="onoffswitch-checkbox" id="myonoffswitch1" checked>
+              <label class="onoffswitch-label" for="myonoffswitch1">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+          </div>
+        </th>
+        <th style="width:50%">
+          <div class="text-center">
+            <label for="">Device 2</label>
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch2" class="onoffswitch-checkbox" id="myonoffswitch2" checked>
+              <label class="onoffswitch-label" for="myonoffswitch2">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+          </div>
+        </th>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
