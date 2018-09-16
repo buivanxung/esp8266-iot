@@ -61,7 +61,6 @@ io.on('connection', function (socket) {
     if (data == "D1ON") {
         client.publish('xungbv/device-command', 'D0:1 ');
         statusD1 = true;
-        console.log("T");
       }
     if (data == "D1OFF"){
         client.publish('xungbv/device-command', 'D0:0 ');
@@ -76,6 +75,9 @@ io.on('connection', function (socket) {
         statusD2 = false;
       }
   })
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
 })
 http.listen(8448, function () {
   console.log("Server running");

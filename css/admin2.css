@@ -1,5 +1,5 @@
 .onoffswitch {
-    position: relative; width: 90px;
+    position: relative; width: 90px; float: middle;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
 .onoffswitch-checkbox {
@@ -43,20 +43,28 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
-li {
-  padding: 7px;
-  margin-left: 10px;
-  border: 0.5px solid #e6f2ff;
+.tn {
+  width: 45%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  padding-bottom: auto;
+  border: 2px solid #f2f2f2;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: white;
 }
 .body {
+  text-align: center;
   margin-left: 50px;
   margin-right: 50px;
   margin-top: 50px;
   padding-bottom: 50px;
-  border: 2px solid green;
+  border: 2px solid #f2f2f2;
   padding: 10px;
   border-radius: 25px;
-  background-color: #e6fff2;
+  background-color: #e6ffe6;
 }
 .p {
   margin-top: 100px;
