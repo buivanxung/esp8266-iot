@@ -25,19 +25,21 @@
           reconnectionAttempts: 99999
         });
   			socket.on('sending_json_data', function (data) {
+          console.log(data);
+          
           var dStatus = data.toString().split(";");
           var d1status = dStatus[0];
           var d2status = dStatus[1];
-          if (d1status[3] =='t') {
-            $("input[id='myonoffswitch1']").is(':checked');
-          }else if (d1status[3] ='f') {
-            $("input[id='myonoffswitch1']").attr('checked',false);
-          }
-          if (d2status[3] =='t') {
-            $("input[id='myonoffswitch2']").is(':checked');
-          }else if (d2status[3] ='f'){
-            $("input[id='myonoffswitch2']").attr('checked',false);
-          }
+          // if (d1status[3] =='t') {
+          //   $("input[id='myonoffswitch1']").is(':checked');
+          // }else if (d1status[3] ='f') {
+          //   $("input[id='myonoffswitch1']").attr('checked',false);
+          // }
+          // if (d2status[3] =='t') {
+          //   $("input[id='myonoffswitch2']").is(':checked');
+          // }else if (d2status[3] ='f'){
+          //   $("input[id='myonoffswitch2']").attr('checked',false);
+          // }
   			});
       $('input').on('click', function() {
         if ($("input[id='myonoffswitch1']").is(':checked')) {

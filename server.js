@@ -6,6 +6,7 @@ var io = require('socket.io')(http);
 app.use(express.static(__dirname + '/'));
 
 var statusD1,statusD2;
+var d_data;
 statusD1 = false; statusD2=false;
 var clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 var client =  require('mqtt').connect('mqtt://34.74.202.175:1883', {
@@ -36,10 +37,11 @@ io.on('connection', function (socket) {
   });
   setInterval(function () {
     var data = "D0:"+statusD1+";"+"D1:"+statusD2+"!";
-    socket.emit('sending_json_data', data)
+    socket.emit('sending_json_data', d_data)
   }, 100);
   client.subscribe('/device1/status', { qos: 0 })
   client.on('message', function (topic, message) {
+    d_data = message;
     var dStatus = message.toString().split(";");
     var d1status = dStatus[0];
     var d2status = dStatus[1];
