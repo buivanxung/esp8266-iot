@@ -35,13 +35,14 @@ io.on('connection', function (socket) {
        console.log(err)
        client.end()
   });
-  setInterval(function () {
-    var data = "D0:"+statusD1+";"+"D1:"+statusD2+"!";
-    socket.emit('sending_json_data', d_data)
-  }, 100);
+  // setInterval(function () {
+  //   var data = "D0:"+statusD1+";"+"D1:"+statusD2+"!";
+  //   socket.emit('sending_json_data', d_data);
+  // }, 100);
   client.subscribe('/device1/status', { qos: 0 })
   client.on('message', function (topic, message) {
-    d_data = message;
+    d_data = message.toString();
+    socket.emit('sending_json_data', d_data);
     // var dStatus = message.toString().split(";");
     // var d1status = dStatus[0];
     // var d2status = dStatus[1];
