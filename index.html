@@ -25,8 +25,9 @@
           reconnectionAttempts: 99999
         });
   			socket.on('sending_json_data', function (data) {
-          console.log(data);
-          
+          if (data != null){
+            console.log(data.toString());
+          }
           // var dStatus = data.toString().split(";");
           // var d1status = dStatus[0];
           // var d2status = dStatus[1];
