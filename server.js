@@ -42,19 +42,19 @@ io.on('connection', function (socket) {
   client.subscribe('/device1/status', { qos: 0 })
   client.on('message', function (topic, message) {
     d_data = message;
-    var dStatus = message.toString().split(";");
-    var d1status = dStatus[0];
-    var d2status = dStatus[1];
-    if (d1status[3] =='1') {
-      statusD1 = true;
-    }else if (d1status[3] ='0') {
-      statusD1 = false;
-    }
-    if (d2status[3] =='1') {
-      statusD2 = true;
-    }else if (d2status[3] ='0'){
-      statusD2 = false;
-    }
+    // var dStatus = message.toString().split(";");
+    // var d1status = dStatus[0];
+    // var d2status = dStatus[1];
+    // if (d1status[3] =='1') {
+    //   statusD1 = true;
+    // }else if (d1status[3] ='0') {
+    //   statusD1 = false;
+    // }
+    // if (d2status[3] =='1') {
+    //   statusD2 = true;
+    // }else if (d2status[3] ='0'){
+    //   statusD2 = false;
+    // }
   });
   client.on('close', function () {
        console.log(clientId + ' disconnected')
