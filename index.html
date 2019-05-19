@@ -58,11 +58,13 @@
           if (socket) {
               socket.emit('respond_command', "D2ON");
             }
+            console.log("D2POFF");
         }
         else {
           if (socket) {
               socket.emit('respond_command', "D2OFF");
             }
+            console.log("D2POFF");
         }
       });
     });
