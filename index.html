@@ -55,7 +55,7 @@
               }
           }
         })
-        $("input[id='myonoffswitch1']").click(function(){
+        $("input[id='myonoffswitch2']").click(function(){
           if ($("input[id='myonoffswitch2']").is(':checked')) {
             if (socket) {
                 socket.emit('respond_command', "D2ON");
