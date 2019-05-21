@@ -35,10 +35,6 @@ io.on('connection', function (socket) {
        console.log(err)
        client.end()
   });
-  // setInterval(function () {
-  //   var data = "D0:"+statusD1+";"+"D1:"+statusD2+"!";
-  //   socket.emit('sending_json_data', d_data);
-  // }, 100);
   client.subscribe('/device1/status', { qos: 0 })
   client.on('message', function (topic, message) {
     d_data = message.toString();
@@ -62,20 +58,20 @@ io.on('connection', function (socket) {
   });
   socket.on('respond_command', function(data) {
     if (data == "D1ON") {
-        client.publish('device1/command', 'D0:1 ');
+        client.publish('/device1/command', 'D0:1 ');
         statusD1 = true;
         console.log("T");
       }
     if (data == "D1OFF"){
-        client.publish('device1/command', 'D0:0 ');
+        client.publish('/device1/command', 'D0:0 ');
         statusD1 = false;
     }
     if (data == "D2ON") {
-        client.publish('device1/command', 'D1:1 ');
+        client.publish('/device1/command', 'D1:1 ');
         statusD2 = true;
       }
     if (data == "D2OFF"){
-        client.publish('device1/command', 'D1:0 ');
+        client.publish('/device1/command', 'D1:0 ');
         statusD2 = false;
       }
   })

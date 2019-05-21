@@ -42,7 +42,6 @@
           //   $("input[id='myonoffswitch2']").attr('checked',false);
           // }
   			});
-      $('input').on('click', function() {
         if ($("input[id='myonoffswitch1']").is(':checked')) {
           if (socket) {
               socket.emit('respond_command', "D1ON");
@@ -51,23 +50,24 @@
         }else {
           if (socket) {
               socket.emit('respond_command', "D1OFF");
+              console.log("D1POFF");
             }
-            console.log("D1POFF");
         }
         if ($("input[id='myonoffswitch2']").is(':checked')) {
           if (socket) {
               socket.emit('respond_command', "D2ON");
+              console.log("D2PON");
             }
-            console.log("D2PON");
+            
         }
         else {
           if (socket) {
               socket.emit('respond_command', "D2OFF");
+              console.log("D2POFF");
             }
-            console.log("D2POFF");
+            
         }
       });
-    });
   </script>
 </head>
 <body>
