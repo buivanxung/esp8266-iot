@@ -41,32 +41,36 @@
           // }else if (d2status[3] ='f'){
           //   $("input[id='myonoffswitch2']").attr('checked',false);
           // }
-  			});
-        if ($("input[id='myonoffswitch1']").is(':checked')) {
-          if (socket) {
-              socket.emit('respond_command', "D1ON");
-              console.log("D1PON");
-            }
-        }else {
-          if (socket) {
-              socket.emit('respond_command', "D1OFF");
-              console.log("D1POFF");
-            }
-        }
-        if ($("input[id='myonoffswitch2']").is(':checked')) {
-          if (socket) {
-              socket.emit('respond_command', "D2ON");
-              console.log("D2PON");
-            }
-            
-        }
-        else {
-          if (socket) {
-              socket.emit('respond_command', "D2OFF");
-              console.log("D2POFF");
-            }
-            
-        }
+        });
+        $("input[id='myonoffswitch1']").click(function(){
+          if ($("input[id='myonoffswitch1']").is(':checked')) {
+            if (socket) {
+                socket.emit('respond_command', "D1ON");
+                console.log("D1PON");
+              }
+          }else {
+            if (socket) {
+                socket.emit('respond_command', "D1OFF");
+                console.log("D1POFF");
+              }
+          }
+        })
+        $("input[id='myonoffswitch1']").click(function(){
+          if ($("input[id='myonoffswitch2']").is(':checked')) {
+            if (socket) {
+                socket.emit('respond_command', "D2ON");
+                console.log("D2PON");
+              }
+              
+          }
+          else {
+            if (socket) {
+                socket.emit('respond_command', "D2OFF");
+                console.log("D2POFF");
+              }
+              
+          }
+        })
       });
   </script>
 </head>
