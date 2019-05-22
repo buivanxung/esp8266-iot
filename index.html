@@ -26,8 +26,8 @@
         });
   			socket.on('sending_json_data', function (data) {
           if (data != null){
-            var dStatus = data.toString().split(";");
-            if (dStatus[1] != null) {
+            var dStatus = data.toString();
+            console.log(data);
               var d1status = dStatus[0];
               var d2status = dStatus[1];
               if (d1status[3] =='t') {
@@ -41,7 +41,6 @@
                 $("input[id='myonoffswitch2']").attr('checked',false);
               }
             }
-          }
         });
         $("input[id='myonoffswitch1']").click(function(){
           if ($("input[id='myonoffswitch1']").is(':checked')) {
