@@ -53,10 +53,10 @@ li {
   margin-right: 50px;
   margin-top: 50px;
   padding-bottom: 50px;
-  border: 2px solid green;
+  border: 2px solid rgb(221, 250, 221);
   padding: 10px;
   border-radius: 25px;
-  background-color: #e6fff2;
+  background-color: #f0fbff;
 }
 .p {
   margin-top: 100px;

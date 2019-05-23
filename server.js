@@ -3,7 +3,9 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var allData = {'D0':0,'D1':0,'D2':0,'D3':0,'D4':0,'D5':0,'D6':0,'D7':0,'D8':0,'D9':0,'D10':0,'D11':0};
+var allData = {'D0':0,'D1':0,'D2':0,'D3':0,'D4':0,'D5':0,'D6':0,'D7':0,'D8':0,'D9':0,'D10':0,'D11':0,
+'D12':0,'D13':0,'D14':0,'D15':0,'D16':0,'D17':0,'D18':0,'D19':0,'D20':0,'D21':0,'D22':0,'D23':0};
+var numberButton;
 
 app.use(express.static(__dirname + '/'));
 
@@ -35,20 +37,10 @@ io.on('connection', function (socket) {
   });
   client.subscribe('/device1/status', { qos: 0 })
   client.on('message', function (topic, message) {
-    d_data = message.toString();
-    socket.emit('sending_json_data', d_data);
-    var dStatus = message.toString();
-    var dPin = dStatus[0];
-    var d2status = dStatus[1];
-    if (d1status[3] =='1') {
-      statusD1 = true;
-    }else if (d1status[3] ='0') {
-      statusD1 = false;
-    }
-    if (d2status[3] =='1') {
-      statusD2 = true;
-    }else if (d2status[3] ='0'){
-      statusD2 = false;
+    socket.emit('sending_json_data', message.toString());
+    var raw = message.toString().split(':');
+    if(allData.hasOwnProperty(raw[0])){
+      allData[raw[0]] = raw[1];
     }
   });
   client.on('close', function () {
@@ -57,7 +49,8 @@ io.on('connection', function (socket) {
   socket.on('respond_command', function(data) {
     var raw = data.toString().split(':');
     if(allData.hasOwnProperty(raw[0])){
-      allData[raw[0]] = 1;
+      allData[raw[0]] = raw[1];
+      client.publish('/device1/command', raw[0]+":"+allData[raw[0]]);
     }
   })
 })

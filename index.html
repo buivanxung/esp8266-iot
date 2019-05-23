@@ -17,6 +17,9 @@
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
       var socket;
+      var allValue = 100;
+      var allData = {'D0':0,'D1':0,'D2':0,'D3':0,'D4':0,'D5':0,'D6':0,'D7':0,'D8':0,'D9':0,'D10':0,'D11':0,
+      'D12':0,'D13':0,'D14':0,'D15':0,'D16':0,'D17':0,'D18':0,'D19':0,'D20':0,'D21':0,'D22':0,'D23':0};
        $(document).ready(function() {
         socket = io.connect('http://34.74.202.175:8448',{
           reconnection: true,
@@ -24,54 +27,38 @@
           reconnectionDelayMax : 5000,
           reconnectionAttempts: 99999
         });
-  			socket.on('sending_json_data', function (data) {
+        for (i = 0; i < allValue; i++) {
+          $('#main').prepend("<div class=\"text-center\"><label for=\"\">Pin D"+i+"</label><div class=\"onoffswitch\"><input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\"myonoffswitch"+i+"\" checked value = "+i+"><label class=\"onoffswitch-label\" for=\"myonoffswitch"+i+"\"><span class=\"onoffswitch-inner\"></span><span class=\"onoffswitch-switch\"></span></label></div></div>");
+        }
+        socket.on('sending_json_data', function (data) {
           if (data != null){
-            var dStatus = data.toString();
-            console.log(data);
-              var d1status = dStatus[0];
-              var d2status = dStatus[1];
-              if (d1status[3] =='t') {
-                $("input[id='myonoffswitch1']").is(':checked');
-              }else if (d1status[3] ='f') {
-                $("input[id='myonoffswitch1']").attr('checked',false);
-              }
-              if (d2status[3] =='t') {
-                $("input[id='myonoffswitch2']").is(':checked');
-              }else if (d2status[3] ='f'){
-                $("input[id='myonoffswitch2']").attr('checked',false);
-              }
+            var raw = data.toString().split(':');
+            if(allData.hasOwnProperty(raw[0])){
+              allData[raw[0]] = raw[1];
             }
+            
+            if (allData[raw[0]] == 1) {
+              $("input[id='myonoffswitch"+raw[0]+"']").is(':checked');
+            }else if (allData[raw[0]] == 0) {
+              $("input[id='myonoffswitch"+raw[0]+"']").attr('checked',false);
+            }
+          }
         });
-        $("input[id='myonoffswitch1']").click(function(){
-          if ($("input[id='myonoffswitch1']").is(':checked')) {
-            if (socket) {
-                socket.emit('respond_command', "D1ON");
-                console.log("D1PON");
-              }
-          }else {
-            if (socket) {
-                socket.emit('respond_command', "D1OFF");
-                console.log("D1POFF");
-              }
-          }
+        $("input[name='onoffswitch']").click(function(e){
+          var position = e.target.defaultValue;
+            if ($("input[id='myonoffswitch"+position+"']").is(':checked')) {
+              if (socket) {
+                  socket.emit('respond_command', "D"+position+":1");
+                  console.log("D"+position+"PON");
+                }
+            }else {
+              if (socket) {
+                  socket.emit('respond_command', "D"+position+":0");
+                  console.log("D"+position+"POFF");
+                }
+            }
         })
-        $("input[id='myonoffswitch2']").click(function(){
-          if ($("input[id='myonoffswitch2']").is(':checked')) {
-            if (socket) {
-                socket.emit('respond_command', "D2ON");
-                console.log("D2PON");
-              }
-              
-          }
-          else {
-            if (socket) {
-                socket.emit('respond_command', "D2OFF");
-                console.log("D2POFF");
-              }
-              
-          }
-        })
-      });
+    });
   </script>
 </head>
 <body>
@@ -79,33 +66,7 @@
     <div class="text-center">
       <p>Control</p>
     </div>
-    <div class="text-center">
-      <table style="width:100%">
-        <th style="width:50%">
-          <div class="text-center">
-            <label for="">Device 1</label>
-            <div class="onoffswitch">
-              <input type="checkbox" name="onoffswitch1" class="onoffswitch-checkbox" id="myonoffswitch1" checked>
-              <label class="onoffswitch-label" for="myonoffswitch1">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-              </label>
-            </div>
-          </div>
-        </th>
-        <th style="width:50%">
-          <div class="text-center">
-            <label for="">Device 2</label>
-            <div class="onoffswitch">
-              <input type="checkbox" name="onoffswitch2" class="onoffswitch-checkbox" id="myonoffswitch2" checked>
-              <label class="onoffswitch-label" for="myonoffswitch2">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-              </label>
-            </div>
-          </div>
-        </th>
-      </table>
+    <div id ="main" class="text-center">
     </div>
   </div>
 </body>
