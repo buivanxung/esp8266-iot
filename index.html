@@ -38,10 +38,10 @@
             if(allData.hasOwnProperty(raw[0])){
               allData[raw[0]] = raw[1];
             if (allData[raw[0]] == '1') {
-              var number = raw[0].split('D');
-              $("input[id='myonoffswitch"+number[1]+"']").is(':checked');
+              var enumber = raw[0].split('D');
+              $("input[id='myonoffswitch"+enumber[1]+"']").is(':checked');
             }else if (allData[raw[0]] == '0') {
-              $("input[id='myonoffswitch"+number[1]+"']").attr('checked',false);
+              $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',false);
             }}}
         });
         $("input[name='onoffswitch']").click(function(e){
