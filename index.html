@@ -35,14 +35,12 @@
             var raw = data.toString().split(':');
             if(allData.hasOwnProperty(raw[0])){
               allData[raw[0]] = raw[1];
-            }
-            
             if (allData[raw[0]] == 1) {
-              $("input[id='myonoffswitch"+raw[0]+"']").is(':checked');
+              var number = raw[0].split('D');
+              $("input[id='myonoffswitch"+number[0]+"']").is(':checked');
             }else if (allData[raw[0]] == 0) {
-              $("input[id='myonoffswitch"+raw[0]+"']").attr('checked',false);
-            }
-          }
+              $("input[id='myonoffswitch"+number[0]+"']").attr('checked',false);
+            }}}
         });
         $("input[name='onoffswitch']").click(function(e){
           var position = e.target.defaultValue;
