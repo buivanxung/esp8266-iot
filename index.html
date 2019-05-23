@@ -32,6 +32,8 @@
         }
         socket.on('sending_json_data', function (data) {
           if (data != null){
+            console.log(data);
+            
             var raw = data.toString().split(':');
             if(allData.hasOwnProperty(raw[0])){
               allData[raw[0]] = raw[1];
