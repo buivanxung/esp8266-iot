@@ -43,6 +43,8 @@
         });
         socket.on('alldata',function (data) {
           allData = data;
+          console.log(allData);
+          
         })
         $("input[name='onoffswitch']").click(function(e){
           var position = e.target.defaultValue;
