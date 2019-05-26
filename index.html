@@ -37,11 +37,7 @@
               allData[raw[0]] = raw[1];
             if (allData[raw[0]] == "1") {
               $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',true);
-              console.log(enumber[1]);
-              
             }else if (allData[raw[0]] == "0") {
-              console.log(0);
-              
               $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',false);
             }}}
         });
@@ -60,12 +56,10 @@
             if ($("input[id='myonoffswitch"+position+"']").is(':checked')) {
               if (socket) {
                   socket.emit('respond_command', "D"+position+":1");
-                  console.log("D"+position+"PON");
                 }
             }else {
               if (socket) {
                   socket.emit('respond_command', "D"+position+":0");
-                  console.log("D"+position+"POFF");
                 }
             }
         })
