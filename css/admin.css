@@ -61,3 +61,10 @@ li {
 .p {
   margin-top: 100px;
 }
+.form_text {
+    height: 60px;
+    width: 90px;
+    margin: 25px 0 15px 15px;
+    float: left;
+   
+}

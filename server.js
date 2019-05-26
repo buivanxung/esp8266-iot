@@ -12,7 +12,7 @@ var allData = {'D0':0,'D1':0,'D2':0,'D3':0,'D4':0,'D5':0,'D6':0,'D7':0,'D8':0,'D
 app.use(express.static(__dirname + '/'));
 
 var clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
-var client =  require('mqtt').connect('mqtt://34.74.202.175:1883', {
+  var client =  require('mqtt').connect('mqtt://34.74.202.175:1883', {
   keepalive: 10,
   clientId: clientId,
   protocolId: 'MQTT',
@@ -30,9 +30,10 @@ app.get('/', function(req, res){
 
 io.on('connection', function (socket) {
   console.log("New connection");
+  socket.emit('alldata', allData);
   client.on('connect', function () {
        console.log('connected:' + clientId);
-       socket.emit('alldata', allData);
+      
   });
   client.on('error', function (err) {
        console.log(err)
@@ -42,6 +43,7 @@ io.on('connection', function (socket) {
   client.on('message', function (topic, message) {
     socket.emit('sending_json_data', message.toString());
     var raw = message.toString().split(':');
+    socket.emit('alldata', allData);
     if(allData.hasOwnProperty(raw[0])){
       allData[raw[0]] = raw[1];
     }
@@ -55,6 +57,7 @@ io.on('connection', function (socket) {
       allData[raw[0]] = raw[1];
       client.publish('/device1/command', raw[0]+":"+allData[raw[0]]);
     }
+    socket.emit('alldata', allData);
   })
 })
 http.listen(8448, function () {

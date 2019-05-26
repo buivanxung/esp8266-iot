@@ -18,16 +18,16 @@
     <script type="text/javascript">
       var socket;
       var allValue = 50;
-      var allData = {};
+      var allData = "";
        $(document).ready(function() {
-        socket = io.connect('http://34.74.202.175:8448',{
+          socket = io.connect('http://34.74.202.175:8448',{
           reconnection: true,
           reconnectionDelay: 1000,
           reconnectionDelayMax : 5000,
           reconnectionAttempts: 99999
         });
         for (i = 0; i < allValue; i++) {
-          $('#main').prepend("<div class=\"text-center\"><label for=\"\">Pin D"+i+"</label><div class=\"onoffswitch\"><input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\"myonoffswitch"+i+"\" checked value = "+i+"><label class=\"onoffswitch-label\" for=\"myonoffswitch"+i+"\"><span class=\"onoffswitch-inner\"></span><span class=\"onoffswitch-switch\"></span></label></div></div>");
+          $('#main').prepend("<div class=\"form_text\"><div class=\"text-center\"><label for=\"\">Pin D"+i+"</label><div class=\"onoffswitch\"><input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\"myonoffswitch"+i+"\" value = "+i+"><label class=\"onoffswitch-label\" for=\"myonoffswitch"+i+"\"><span class=\"onoffswitch-inner\"></span><span class=\"onoffswitch-switch\"></span></label></div></div></div>");
         }
         socket.on('sending_json_data', function (data) {
           if (data != null){
@@ -35,16 +35,22 @@
             var enumber = raw[0].split('D');
             if(allData.hasOwnProperty(raw[0])){
               allData[raw[0]] = raw[1];
-            if (allData[raw[0]] == '1') {
-              $("input[id='myonoffswitch"+enumber[1]+"']").is(':checked');
-            }else if (allData[raw[0]] == '0') {
+            if (allData[raw[0]] == "1") {
+              $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',true);
+            }else if (allData[raw[0]] == "0") {
               $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',false);
             }}}
         });
         socket.on('alldata',function (data) {
           allData = data;
-          console.log(allData);
-          
+          for (i = 0 ;i < allValue; i++){
+            if (allData["D"+i] == "1") {
+              $("input[id='myonoffswitch"+i+"']").attr('checked',true);
+            }else if (allData["D"+i] == "0") {
+              console.log(0);
+              $("input[id='myonoffswitch"+i+"']").attr('checked',false);
+            }
+          }
         })
         $("input[name='onoffswitch']").click(function(e){
           var position = e.target.defaultValue;
@@ -66,7 +72,7 @@
 <body>
   <div class="body">
     <div class="text-center">
-      <p>Control</p>
+      <h1>Control Devices</h1>
     </div>
     <div id ="main" class="text-center">
     </div>
