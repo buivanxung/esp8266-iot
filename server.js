@@ -44,7 +44,7 @@ io.on('connection', function (socket) {
     socket.emit('sending_json_data', message.toString());
     var raw = message.toString().split(':');
     if(allData.hasOwnProperty(raw[0])){
-      allData[raw[0]] = raw[1];
+      allData[raw[0]] = raw[1].charAt(0);
     }
   });
   client.on('close', function () {
