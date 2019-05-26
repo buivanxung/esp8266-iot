@@ -50,6 +50,9 @@ io.on('connection', function (socket) {
   client.on('close', function () {
        console.log(clientId + ' disconnected')
   });
+  client.on('disconnect', function () {
+    console.log(clientId + ' disconnected')
+  });
   socket.on('respond_command', function(data) {
     var raw = data.toString().split(':');
     if(allData.hasOwnProperty(raw[0])){
