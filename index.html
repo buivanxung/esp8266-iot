@@ -32,16 +32,20 @@
         socket.on('sending_json_data', function (data) {
           if (data != null){
             console.log(data);
-            
             var raw = data.toString().split(':');
             var enumber = raw[0].split('D');
             console.log(enumber);
+            console.log(allData);
             
             if(allData.hasOwnProperty(raw[0])){
               allData[raw[0]] = raw[1];
             if (allData[raw[0]] == "0") {
+              console.log(0);
+              
               $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',false);
             }else if (allData[raw[0]] == "1") {
+              console.log(1);
+              
               $("input[id='myonoffswitch"+enumber[1]+"']").prop('checked',true);
             }}}
         });
