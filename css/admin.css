@@ -49,9 +49,9 @@ li {
   border: 0.5px solid #e6f2ff;
 }
 .body {
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-top: 50px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 10px;
   padding-bottom: 50px;
   border: 2px solid rgb(221, 250, 221);
   padding: 10px;
@@ -61,10 +61,43 @@ li {
 .p {
   margin-top: 100px;
 }
+.led_off{
+    margin-left: 3px;
+    margin-right: 3px;
+    content: "OFF";
+    height: 70px;
+    width: 70px;
+    background-color: rgb(187, 187, 187);
+    border-radius: 50%;
+    line-height: 70px;
+    text-align: center;
+    display: inline-block;
+    
+}
+.led_on{
+    margin-left: 3px;
+    margin-right: 3px;
+    content: "ON";
+    height: 70px;
+    width: 70px;
+    background-color: #009900; 
+    border-radius: 50%;
+    line-height: 70px;
+    text-align: center;
+    display: inline-block;
+}
 .form_text {
     height: 60px;
     width: 90px;
     margin: 25px 0 15px 15px;
     float: left;
-   
 }
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(25, 104, 128);
+    color: white;
+    text-align: center;
+ }
