@@ -19,6 +19,7 @@
       var socket;
       var allValue = 8;
       var allData = "";
+      var inputData = "";
        $(document).ready(function() {
           socket = io.connect('http://34.74.202.175:8448',{
           reconnection: true,
@@ -26,23 +27,33 @@
           reconnectionDelayMax : 5000,
           reconnectionAttempts: 99999
         });
-        for (i = 0; i < allValue; i++) {
+        for (i = allValue - 1; i > -1; i--) {
           $('#main').prepend("<div class=\"form_text\"><div class=\"text-center\"><label for=\"\">Pin D"+i+"</label><div class=\"onoffswitch\"><input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\"myonoffswitch"+i+"\" value = "+i+"><label class=\"onoffswitch-label\" for=\"myonoffswitch"+i+"\"><span class=\"onoffswitch-inner\"></span><span class=\"onoffswitch-switch\"></span></label></div></div></div>");
         }
         socket.on('sending_json_data', function (data) {
           if (data != null){
             var raw = data.toString().split(':');
             var enumber = raw[0].split('D');
-            if(allData.hasOwnProperty(raw[0])){
-              allData[raw[0]] = raw[1].charAt(0);
-            if (allData[raw[0]] == "0") {
-             
-              
-              $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',false);
-            }else if (allData[raw[0]] == "1") {
-             
-              $("input[id='myonoffswitch"+enumber[1]+"']").prop('checked',true);
-            }}}
+            if(raw[0].charAt(0) == 'I'){
+              if(inputData.hasOwnProperty(raw[0])){
+                inputData[raw[0]] = raw[1].charAt(0);
+                if (inputData[raw[0]] == "0") {
+                  $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',false);
+                  }else if (inputData[raw[0]] == "1") {
+                    $("input[id='myonoffswitch"+enumber[1]+"']").prop('checked',true);
+                  }
+              }
+            }else if (raw[0].charAt(0) == 'D'){
+              if(allData.hasOwnProperty(raw[0])){
+                allData[raw[0]] = raw[1].charAt(0);
+              if (allData[raw[0]] == "0") {
+                $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',false);
+              }else if (allData[raw[0]] == "1") {
+                $("input[id='myonoffswitch"+enumber[1]+"']").prop('checked',true);
+              }
+            }
+          }
+          }
         });
         socket.on('alldata',function (data) {
           allData = data;
@@ -72,41 +83,41 @@
 <body>
   <div class="body">
     <div class="text-center">
-        <img src="/css/download.png" width="5%">
+        <img src="/css/download.png" width="8%">
       <h2>Trường Cao Đẳng Kỹ Thuật Cao Thắng TPHCM</h2>
-      <h3>Khoa Điện Tử - Viễn Thông</h3>
+      <h3>Khoa Điện Tử - Tin Học</h3>
     </div>
   </div>
   <div class="text-center">
       <h1><font color="red"><strong>ĐỒ ÁN TỐT NGHIỆP - 2019</strong> </font></h1>
       <br>
-    <h1><font color="blue"></font><strong>Bảng Trạng Thái</strong></font></h1>
+    <h3><font color="blue"></font><strong><u> Bảng Trạng Thái</u></strong></font></h3>
     <br>
   </div>
   <div class="text-left">
     <div class="led_off">
         <span class=""> <strong>OFF</strong></span>
+        <h5><strong>Thết bị 0</strong></h5>
+    </div>
+    <div class="led_on">
+        <span class=""> <strong>ON</strong></span>
         <h5><strong>Thết bị 1</strong></h5>
     </div>
-    <div class="led_on">
-        <span class=""> <strong>ON</strong></span>
+    <div class="led_off">
+        <span class=""> <strong>OFF</strong></span>
         <h5><strong>Thết bị 2</strong></h5>
     </div>
-    <div class="led_off">
-        <span class=""> <strong>OFF</strong></span>
+    <div class="led_on">
+        <span class=""> <strong>ON</strong></span>
         <h5><strong>Thết bị 3</strong></h5>
     </div>
-    <div class="led_on">
-        <span class=""> <strong>ON</strong></span>
-        <h5><strong>Thết bị 4</strong></h5>
-    </div>
     <div class="led_off">
         <span class=""> <strong>OFF</strong></span>
-        <h5><strong>Thết bị 5</strong></h5>
+        <h5><strong>Thết bị 4</strong></h5>
     </div>
     <div class="led_on">
         <span class=""> <strong>ON</strong></span>
-        <h5><strong>Thết bị 6</strong></h5>
+        <h5><strong>Thết bị 5</strong></h5>
     </div>
     <div class="led_off">
         <span class=""> <strong>OFF</strong></span>
@@ -114,12 +125,12 @@
     </div>
   </div>
   <div class="text-center">
-      <h1><font color="blue"></font><strong>Bảng Điều Khiển</strong></font></h1>
+      <h3><font color="blue"></font><strong><u>Bảng Điều Khiển</u></strong></font></h3>
   </div>
     <div id ="main" class="text-center">
   </div>
   <div class="footer">
-      <h2>Nguyễn Thành Đạt - Trịnh Văn Hoài</h2>
+      <h5>Nguyễn Thành Đạt - Trịnh Văn Hoài</h5>
   </div>
 </body>
 </html>
