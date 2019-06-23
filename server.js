@@ -4,7 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var allData = {'D0':0,'D1':0,'D2':0,'D3':0,'D4':0,'D5':0,'D6':0,'D7':0,'D8':0,'D9':0,'D10':0,'D11':0};
-var inputData = {'I0':0,'I1':0,'I2':0,'I3':0,'I4':0,'I5':0,'D6':0,'D7':0,'D8':0,'D9':0,'D10':0,'D11':0};
+var inputData = {'I0':0,'I1':0,'I2':0,'I3':0,'I4':0,'I5':0};
 
 app.use(express.static(__dirname + '/'));
 
@@ -28,6 +28,7 @@ app.get('/', function(req, res){
 io.on('connection', function (socket) {
   console.log("New connection");
   socket.emit('alldata', allData);
+  socket.emit('inputdata', inputData);
   client.on('connect', function () {
        console.log('connected:' + clientId);
       
