@@ -39,13 +39,11 @@ io.on('connection', function (socket) {
   });
   client.subscribe('/device1/status', { qos: 0 })
   client.on('message', function (topic, message) {
-    if(message.length > 10){
-      var spraw = message.toString().split(',');
-      for(i=0;i<spraw.length;i++){
-        var raw = spraw[i].toString().split(':');
-        if(raw[0].charAt(0) == 'I'){
-          if(inputData.hasOwnProperty(raw[0])){
-            inputData[raw[0]] = raw[1].charAt(0);
+    if(message.length > 5){
+      for(i=0;i < 6; i++){
+        if(message.charAt(0) == 'I'){
+          if(inputData.hasOwnProperty("I"+i)){
+            inputData["I"+i] = message.charAt(i+1);
           }
         }
       }
