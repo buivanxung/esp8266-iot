@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var allData = {'D0':0,'D1':0,'D2':0,'D3':0,'D4':0,'D5':0,'D6':0,'D7':0,'D8':0,'D9':0,'D10':0,'D11':0};
+var allData = {'D0':0,'D1':0,'D2':0,'D3':0,'D4':0,'D5':0,'D6':0,'D7':0,'D8':0};
 var inputData = {'I0':0,'I1':0,'I2':0,'I3':0,'I4':0,'I5':0};
 
 app.use(express.static(__dirname + '/'));
@@ -27,8 +27,8 @@ app.get('/', function(req, res){
 
 io.on('connection', function (socket) {
   console.log("New connection");
-  socket.emit('alldata', allData);
-  socket.emit('inputdata', inputData);
+  socket.broadcast.emit('alldata', allData);
+  socket.broadcast.emit('inputdata', inputData);
   client.on('connect', function () {
        console.log('connected:' + clientId);
       
@@ -39,13 +39,21 @@ io.on('connection', function (socket) {
   });
   client.subscribe('/device1/status', { qos: 0 })
   client.on('message', function (topic, message) {
-    socket.emit('sending_json_data', message.toString());
-    var raw = message.toString().split(':');
-    if(raw[0].charAt(0) == 'I'){
-      if(inputData.hasOwnProperty(raw[0])){
-        inputData[raw[0]] = raw[1].charAt(0);
+    if(message.length > 10){
+      var spraw = message.toString().split(',');
+      for(i=0;i<spraw.length;i++){
+        var raw = spraw[i].toString().split(':');
+        if(raw[0].charAt(0) == 'I'){
+          if(inputData.hasOwnProperty(raw[0])){
+            inputData[raw[0]] = raw[1].charAt(0);
+          }
+        }
       }
-    }else if (raw[0].charAt(0) == 'D'){
+      socket.broadcast.emit('inputdata', inputData);
+    }
+    socket.broadcast.emit('sending_json_data', message.toString());
+    var raw = message.toString().split(':');
+    if (raw[0].charAt(0) == 'D'){
       if(allData.hasOwnProperty(raw[0])){
         allData[raw[0]] = raw[1].charAt(0);
       }
@@ -66,7 +74,7 @@ io.on('connection', function (socket) {
       allData[raw[0]] = raw[1];
       client.publish('/device1/command', raw[0]+":"+allData[raw[0]]);
     }
-    socket.emit('alldata', allData);
+    socket.broadcast.emit('alldata', allData);
   })
 })
 http.listen(8448, function () {
