@@ -31,7 +31,6 @@ io.on('connection', function (socket) {
   socket.broadcast.emit('inputdata', inputData);
   client.on('connect', function () {
        console.log('connected:' + clientId);
-      
   });
   client.on('error', function (err) {
        console.log(err);
@@ -51,17 +50,24 @@ io.on('connection', function (socket) {
       }
       socket.broadcast.emit('inputdata', inputData);
     }else{
-      socket.broadcast.emit('sending_json_data', message.toString());
       var raw = message.toString().split(':');
       if (raw[0].charAt(0) == 'I'){
         if(inputData.hasOwnProperty(raw[0])){
           inputData[raw[0]] = raw[1].charAt(0);
         }
+        socket.broadcast.emit('inputdata', inputData);
       }
       if (raw[0].charAt(0) == 'D'){
         if(allData.hasOwnProperty(raw[0])){
           allData[raw[0]] = raw[1].charAt(0);
         }
+        socket.broadcast.emit('alldata', allData);
+      }
+      if (raw[0].charAt(0) == 'R'){
+        for (i=0; i<8; i++){
+          allData["D"+i] = "0";
+        }
+        socket.broadcast.emit('alldata', allData);
       }
     }
   });

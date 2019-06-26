@@ -43,34 +43,6 @@
         for (i = allValue - 1; i > -1; i--) {
           $('#main').prepend("<div class=\"form_text\"><div class=\"text-center\"><label for=\"\">Pin D"+i+"</label><div class=\"onoffswitch\"><input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\"myonoffswitch"+i+"\" value = "+i+"><label class=\"onoffswitch-label\" for=\"myonoffswitch"+i+"\"><span class=\"onoffswitch-inner\"></span><span class=\"onoffswitch-switch\"></span></label></div></div></div>");
         }
-        socket.on('sending_json_data', function (data) {
-          if (data != null){
-            var raw = data.toString().split(':');
-            if(raw[0].charAt(0) == 'I'){
-              var enumber = raw[0].split('I');
-              if(inputData.hasOwnProperty(raw[0])){
-                inputData[raw[0]] = raw[1].charAt(0);
-                if (inputData[raw[0]] == "0") {
-                  $('#IB'+enumber[1]).removeClass('led_on').addClass('led_off');
-                  $('#I'+enumber[1]).html('OFF');
-                  }else if (inputData[raw[0]] == "1") {
-                    $('#IB'+enumber[1]).removeClass('led_off').addClass('led_on');
-                    $('#I'+enumber[1]).html('ON');
-                  }
-              }
-            }else if (raw[0].charAt(0) == 'D'){
-              var enumber = raw[0].split('D');
-              if(allData.hasOwnProperty(raw[0])){
-                allData[raw[0]] = raw[1].charAt(0);
-              if (allData[raw[0]] == "0") {
-                $("input[id='myonoffswitch"+enumber[1]+"']").attr('checked',false);
-              }else if (allData[raw[0]] == "1") {
-                $("input[id='myonoffswitch"+enumber[1]+"']").prop('checked',true);
-              }
-            }
-          }
-          }
-        });
         socket.on('alldata',function (data) {
           allData = data;
           for (i = 0 ;i < allValue; i++){
@@ -125,27 +97,27 @@
   <div class="text-left">
     <div id="IB0">
         <label for=""><span id="I0"> </span></label>
-        <h5><strong>Thết bị 0</strong></h5>
+        <h5><strong>Manual</strong></h5>
     </div>
     <div id ="IB1">
         <label for=""><span id="I1"> </span></label>
-        <h5><strong>Thết bị 1</strong></h5>
+        <h5><strong>Motor 1</strong></h5>
     </div>
     <div id="IB2">
         <label for=""><span id="I2"> </span></label>
-        <h5><strong>Thết bị 2</strong></h5>
+        <h5><strong>Motor 2</strong></h5>
     </div>
     <div id="IB3">
         <label for=""><span id="I3"> </span></label>
-        <h5><strong>Thết bị 3</strong></h5>
+        <h5><strong>Ngõ vào 1</strong></h5>
     </div>
     <div id="IB4">
         <label for=""><span id="I4"> </span></label>
-        <h5><strong>Thết bị 4</strong></h5>
+        <h5><strong>Ngõ vào 2</strong></h5>
     </div>
     <div id="IB5">
         <label for=""><span id="I5"> </span></label>
-        <h5><strong>Thết bị 5</strong></h5>
+        <h5><strong>Ngõ vào 3</strong></h5>
     </div>
   </div>
   <div class="text-center">
