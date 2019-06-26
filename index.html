@@ -46,8 +46,6 @@
         socket.on('sending_json_data', function (data) {
           if (data != null){
             var raw = data.toString().split(':');
-            console.log(data);
-            
             if(raw[0].charAt(0) == 'I'){
               var enumber = raw[0].split('I');
               if(inputData.hasOwnProperty(raw[0])){

@@ -50,12 +50,18 @@ io.on('connection', function (socket) {
         }
       }
       socket.broadcast.emit('inputdata', inputData);
-    }
-    socket.broadcast.emit('sending_json_data', message.toString());
-    var raw = message.toString().split(':');
-    if (raw[0].charAt(0) == 'D'){
-      if(allData.hasOwnProperty(raw[0])){
-        allData[raw[0]] = raw[1].charAt(0);
+    }else{
+      socket.broadcast.emit('sending_json_data', message.toString());
+      var raw = message.toString().split(':');
+      if (raw[0].charAt(0) == 'I'){
+        if(inputData.hasOwnProperty(raw[0])){
+          inputData[raw[0]] = raw[1].charAt(0);
+        }
+      }
+      if (raw[0].charAt(0) == 'D'){
+        if(allData.hasOwnProperty(raw[0])){
+          allData[raw[0]] = raw[1].charAt(0);
+        }
       }
     }
   });
